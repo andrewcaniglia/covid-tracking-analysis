@@ -50,17 +50,18 @@ def usa_data():
     vacc_state_totals_abbv['Series_Complete_12PlusPop_Pct'] = vacc_state_totals_abbv['Series_Complete_12Plus']/vacc_state_totals_abbv['12PlusPop']*100
     vacc_state_totals_abbv['Series_Complete_18PlusPop_Pct'] = vacc_state_totals_abbv['Series_Complete_18Plus']/vacc_state_totals_abbv['18PlusPop']*100
     vacc_state_totals_abbv['Series_Complete_65PlusPop_Pct'] = vacc_state_totals_abbv['Series_Complete_65Plus']/vacc_state_totals_abbv['65PlusPop']*100
-
-    correct_order = ['Date', 'Recip_State', 'Recip_County', 'Series_Complete_Yes', 'totalPop', 'Series_Complete_Pop_Pct',
-                 'Series_Complete_12Plus', '12PlusPop', 'Series_Complete_12PlusPop_Pct', 'Series_Complete_18Plus',
-                 '18PlusPop', 'Series_Complete_18PlusPop_Pct', 'Series_Complete_65Plus', '65PlusPop', 
-                'Series_Complete_65PlusPop_Pct']
     
     vacc_state_totals_abbv['Administered_Dose1_Pop_Pct'] = vacc_state_totals_abbv['Administered_Dose1_Recip']/vacc_state_totals_abbv['totalPop']*100
     vacc_state_totals_abbv['Administered_Dose1_Recip_12PlusPop_Pct'] = vacc_state_totals_abbv['Administered_Dose1_Recip_12Plus']/vacc_state_totals_abbv['12PlusPop']*100
     vacc_state_totals_abbv['Administered_Dose1_Recip_18PlusPop_Pct'] = vacc_state_totals_abbv['Administered_Dose1_Recip_18Plus']/vacc_state_totals_abbv['18PlusPop']*100
     vacc_state_totals_abbv['Administered_Dose1_Recip_65PlusPop_Pct'] = vacc_state_totals_abbv['Administered_Dose1_Recip_65Plus']/vacc_state_totals_abbv['65PlusPop']*100
     vacc_state_totals_abbv['Recip_County'] = 'Total'
+    
+    correct_order = ['Date', 'Recip_State', 'Recip_County', 'Series_Complete_Yes', 'totalPop', 'Series_Complete_Pop_Pct',
+                 'Series_Complete_12Plus', '12PlusPop', 'Series_Complete_12PlusPop_Pct', 'Series_Complete_18Plus',
+                 '18PlusPop', 'Series_Complete_18PlusPop_Pct', 'Series_Complete_65Plus', '65PlusPop', 
+                'Series_Complete_65PlusPop_Pct']
+    
     vacc_state_totals_abbv = vacc_state_totals_abbv[correct_order]
     vacc_state_totals_abbv.rename(columns={'Recip_State':'state', 'Date': 'date'}, inplace=True)
     
