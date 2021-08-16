@@ -70,7 +70,7 @@ def get_vacc_pop_pct():
                                                       'Administered_Dose1_Recip_65Plus']
     for val in values:
         vacc_data.insert(len(vacc_data.columns), f'{val}_Pop_Pct', 
-            df[val]/vacc_data[f'{val.split("_")[-1][0:2]}PlusPop']*100)
+            vacc_data[val]/vacc_data[f'{val.split("_")[-1][0:2]}PlusPop']*100)
     vacc_data['Administered_Dose1_Pop_Pct'] = vacc_data[
         'Administered_Dose1_Recip']/vacc_data['totalPop']*100
     
@@ -85,7 +85,11 @@ def get_all_data():
                                                                              get_vacc_pop_pct()])
     
     all_data.sort_values('date', ascending = False, inplace=True)
-    all_data.reset_index(inplace=True)
+    all_data.reset_index(drop=True, inplace=True)
+    columns_order = list(all_data.columns)
+    columns_order.insert(0, 'date')
+    columns_order.pop(15)
+    all_data = all_data[columns_order]
     return all_data
 
- 
+usa_covid_data = get_all_data()
