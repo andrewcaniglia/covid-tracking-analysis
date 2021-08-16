@@ -13,7 +13,7 @@ CENSUS_AGE = 'https://www2.census.gov/programs-surveys/popest/tables/2010-2019/s
 CDC_VACC = 'https://data.cdc.gov/api/views/8xkx-amqh/rows.csv?accessType=DOWNLOAD'
 
 def get_cases():
-  """Gathers case/death data"""
+    """Gathers case/death data"""
     cases = pd.read_csv(CDC_CASES)
     cases['date'] = [datetime.strptime(x, '%m/%d/%Y') for x in cases['submission_date']]
     cases.drop('submission_date', axis=1, inplace=True)
@@ -21,13 +21,13 @@ def get_cases():
     return cases
 
 def get_hosp():
-  """Gathers hospitalization data"""
+    """Gathers hospitalization data"""
     hosp = pd.read_csv(HD_HOSP).sort_values('date', ascending=False)
     hosp['date'] = [datetime.strptime(x, '%Y/%m/%d') for x in hosp['date']]
     return hosp
 
 def get_test():
-  """Gathers testing data"""
+    """Gathers testing data"""
     test = pd.read_csv(HD_TEST).sort_values(by='date',ascending=False)
     test['date'] = [datetime.strptime(x, '%Y/%m/%d') for x in test['date']]
     test = test.pivot(index=['date', 'state'], columns = 'overall_outcome', values = [
@@ -36,7 +36,7 @@ def get_test():
     return test
 
 def get_state_pop():
-  """Creates a table of US state populations"""
+    """Creates a table of US state populations"""
     state_abbv = pd.read_html(STATE_ABBV)[0]
     census_by_age = pd.read_csv(CENSUS_AGE).rename(columns={'NAME':'State'})
     census_by_age_all = census_by_age.loc[census_by_age['SEX']==0]
@@ -45,8 +45,8 @@ def get_state_pop():
     return state_pop
 
 def get_pop_cat():
-  """Calculates the US state populations for persons 12+, 18+, and 65+
-  in age"""
+    """Calculates the US state populations for persons 12+, 18+, and 65+
+    in age"""
     ages = [12, 18, 65, 999]
     cat_list = []
 
@@ -61,8 +61,8 @@ def get_pop_cat():
     return pop_cat
 
 def get_vacc():
-  """gathers vaccine data and merges it with the US State population
-  data by age group"""
+    """gathers vaccine data and merges it with the US State population
+    data by age group"""
     vacc = pd.read_csv(CDC_VACC).rename(columns={'Recip_State':'state'})
     vacc['date'] = [datetime.strptime(x, '%m/%d/%Y') for x in vacc['Date']]
     vacc_state_totals = vacc.groupby(['date','state'])[['Series_Complete_Yes',
@@ -74,8 +74,8 @@ def get_vacc():
     return vacc_state_totals_abbv
 
 def get_vacc_pop_pct():
-  """Caculates the percentage of each age group that is either
-  partially or fully vaccinated and adds it to the vaccination data."""
+    """Caculates the percentage of each age group that is either
+    partially or fully vaccinated and adds it to the vaccination data."""
     vacc_data = get_vacc()
     values = ['Series_Complete_12Plus',
               'Series_Complete_18Plus', 'Series_Complete_65Plus',
@@ -91,7 +91,7 @@ def get_vacc_pop_pct():
     return vacc_data
 
 def get_all_data():
-  """Combines all COVID data into a single source"""
+    """Combines all COVID data into a single source"""
     all_data = reduce(lambda  left,right: pd.merge(left,right,
                                         on=['state', 'date'], how='outer'), [
                                           get_cases(), get_hosp(), get_test(), get_vacc_pop_pct()])
