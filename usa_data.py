@@ -47,12 +47,13 @@ def get_state_pop():
 def get_pop_cat():
     """Calculates the US state populations for persons 12+, 18+, and 65+
     in age"""
+    state_pop = get_state_pop()
     ages = [12, 18, 65, 999]
     cat_list = []
 
     for val in ages:
-        cat_list.append(get_state_pop().loc[(get_state_pop()['AGE']>=
-            val)&(get_state_pop()['AGE']<val+100)].groupby('state').sum().reset_index()[
+        cat_list.append(state_pop.loc[(state_pop['AGE']>=
+            val)&(state_pop['AGE']<val+100)].groupby('state').sum().reset_index()[
               ['state', 'POPEST2019_CIV']].rename(columns = {
                 'POPEST2019_CIV': str(val) + 'PlusPop'}))
     pop_cat = reduce(lambda  left,right: pd.merge(left,right,on=['state'],
