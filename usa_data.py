@@ -4,13 +4,13 @@ from datetime import datetime
 from functools import reduce
 import pandas as pd
 
-HD_TEST = 'https://beta.healthdata.gov/api/views/j8mb-icvb/rows.csv?accessType=DOWNLOAD'
-HD_HOSP = 'https://beta.healthdata.gov/api/views/g62h-syeh/rows.csv?accessType=DOWNLOAD'
-CDC_CASES= 'https://data.cdc.gov/api/views/9mfq-cb36/rows.csv?accessType=DOWNLOAD'
+HD_TEST = 'https://beta.healthdata.gov/api/views/j8mb-icvb/rows.csv'
+HD_HOSP = 'https://beta.healthdata.gov/api/views/g62h-syeh/rows.csv'
+CDC_CASES= 'https://data.cdc.gov/api/views/9mfq-cb36/rows.csv'
 
 STATE_ABBV = 'https://worldpopulationreview.com/states/state-abbreviations'
 CENSUS_AGE = 'https://www2.census.gov/programs-surveys/popest/tables/2010-2019/state/asrh/sc-est2019-agesex-civ.csv'
-CDC_VACC = 'https://data.cdc.gov/api/views/8xkx-amqh/rows.csv?accessType=DOWNLOAD'
+CDC_VACC = 'https://data.cdc.gov/api/views/8xkx-amqh/rows.csv'
 
 def get_cases():
     """Gathers case/death data"""
