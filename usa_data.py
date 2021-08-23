@@ -17,7 +17,7 @@ def get_cases():
     cases = pd.read_csv(CDC_CASES)
     cases['date'] = [datetime.strptime(x, '%m/%d/%Y') for x in cases['submission_date']]
     cases.drop('submission_date', axis=1, inplace=True)
-    cases['cfr'] = cases['new_death']/cases['new_case']*100
+    cases['cfr%'] = cases['new_death']/cases['new_case']*100
     return cases
 
 def get_hosp():
@@ -33,6 +33,10 @@ def get_test():
     test = test.pivot(index=['date', 'state'], columns = 'overall_outcome', values = [
       'new_results_reported', 'total_results_reported'])
     test.reset_index(inplace=True)
+    test.columns = [col[0] for col in test.columns[0:2]] + [
+                                          '_'.join(col) for col in test.columns[2:]]
+    test['daily_total_tests'] = test[test.columns[2:5]].sum(axis=1)
+    test['daily_test_positivity_rate%'] = test[test.columns[4]]/test['daily_total_tests']*100
     return test
 
 def get_state_pop():
